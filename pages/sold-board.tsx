@@ -11,8 +11,7 @@ function SoldBoard() {
     const router = useRouter()
     const headerNames = ['#', 'NFT ID', 'Show NFT', 'Sum to withdraw', 'Action']
     const [marketPlaceContract, setMarketPlaceContract] = useState(null || {} as any)
-    const [encodedNftContract, setEncodedNftContract] = useState(null || {} as any)
-    const [isOwner, setIsOwner] = useState(false)
+    const [encodedNftContract, setEncodedNftContract] = useState(null || {} as any) 
     const [account, setAccount] = useState('')
     const [soldNfts, setSoldNfts] = useState([] as SoldNft[])
     const [idsHistory, setIdsHistory] = useState([] as string[])
@@ -21,11 +20,7 @@ function SoldBoard() {
         id: string,
         soldSum: string,
         currentOwner: string
-    }
-    // const soldNfts: SoldNft[] = [
-    //     { id: 1"", soldSum: '1234', currentOwner: 'abcd' },
-    //     { id: 2, soldSum: '1234', currentOwner: 'abcd' }
-    // ]
+    } 
 
     useEffect(() => {
         getWeb3Instance()

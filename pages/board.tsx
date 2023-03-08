@@ -3,10 +3,11 @@ import { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
-import { BuyersList, NFTProps } from "../interfaces/types";
+import { BuyersList, NFTProps, Web3InstanceProps } from "../interfaces/types";
 import Marketplace from '../contracts/ethereum-contracts/Marketplace.json'
 import EncodedNft from '../contracts/ethereum-contracts/ENCNFT.json'
 import { decryptPrivateKey, metamaskEncrypt } from "../utils/metamask";
+import { getWeb3Instance } from "../utils/web3";
 
 type BoardProps = {
     nft: NFTProps,
@@ -20,23 +21,35 @@ function Board({ nft, buyers }: BoardProps) {
     const [encodedNftContract, setEncodedNftContract] = useState(null || {} as any)
     const [isOwner, setIsOwner] = useState(false)
     const [account, setAccount] = useState('')
+
     useEffect(() => {
-        const loadNFTInfo = async () => {
-            const web3Modal = new Web3Modal()
-            const provider = await web3Modal.connect()
-            const web3 = new Web3(provider)
-            const networkId = await web3.eth.net.getId()
-            const accounts = await web3.eth.getAccounts();
-            console.log("🚀 ~ file: index.tsx ~ line 20 ~ loadNFTs ~ networkId", networkId)
-            setAccount(accounts[0])
-            // Get all listed NFTs
-            const marketPlaceContract = new web3.eth.Contract(Marketplace.abi as any, Marketplace.networks[`${networkId}` as keyof typeof Marketplace.networks]?.address)
-            setMarketPlaceContract(marketPlaceContract)
-            const encodedNftContract = new web3.eth.Contract(EncodedNft.abi as any, EncodedNft.networks[`${networkId}` as keyof typeof EncodedNft.networks]?.address)
-            setEncodedNftContract(encodedNftContract)
-        }
-        loadNFTInfo()
-    }, [nft, buyers])
+        getWeb3Instance()
+            .then((inst: Web3InstanceProps) => {
+                setAccount(inst.currentAddress)
+                setMarketPlaceContract(inst.marketPlaceContract)
+                setEncodedNftContract(inst.encNftContract)
+            }).catch((err: any) => {
+                console.log('err', err)
+            })
+    }, [])
+
+    // useEffect(() => {
+    //     const loadNFTInfo = async () => {
+    //         const web3Modal = new Web3Modal()
+    //         const provider = await web3Modal.connect()
+    //         const web3 = new Web3(provider)
+    //         const networkId = await web3.eth.net.getId()
+    //         const accounts = await web3.eth.getAccounts();
+    //         console.log("🚀 ~ file: index.tsx ~ line 20 ~ loadNFTs ~ networkId", networkId)
+    //         setAccount(accounts[0])
+    //         // Get all listed NFTs
+    //         const marketPlaceContract = new web3.eth.Contract(Marketplace.abi as any, Marketplace.networks[`${networkId}` as keyof typeof Marketplace.networks]?.address)
+    //         setMarketPlaceContract(marketPlaceContract)
+    //         const encodedNftContract = new web3.eth.Contract(EncodedNft.abi as any, EncodedNft.networks[`${networkId}` as keyof typeof EncodedNft.networks]?.address)
+    //         setEncodedNftContract(encodedNftContract)
+    //     }
+    //     loadNFTInfo()
+    // }, [nft, buyers])
 
     useEffect(() => {
         nft.seller === account ?

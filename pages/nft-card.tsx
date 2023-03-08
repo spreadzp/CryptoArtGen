@@ -78,8 +78,10 @@ function NftCard({ nftItem, index, userAddress }: NftCardProps) {
       if (dk ) {
         console.log("🚀 ~ file: nft-card.tsx:28 ~ decryptData ~ dk", dk)
         const encodedPrompt = nft.encodedPrompt;
-        if(encodedPrompt && nft?.decodedPrompt) {
+        console.log('nft?.decodedPrompt', nft?.decodedPrompt)
+        if(encodedPrompt ) {
           const decPrompt = decryptByCJ(encodedPrompt, dk);
+          console.log("🚀 ~ file: nft-card.tsx:84 ~ decryptData ~ decPrompt:", decPrompt)
           nft.decodedPrompt = decPrompt;
           setNft(nft)
         }

@@ -23,7 +23,7 @@ export default function Home() {
     return (<h1 className="px-20 py-10 text-3xl font-bold text-white">No NFTs available!</h1>)
   } else if (loadingState === 'Fail') {
     return (<h1 className="px-20 py-10 text-3xl font-bold text-white">
-      Need to use Metamask wallet with Mumbai network</h1>)
+      Need to use Metamask wallet with Fantom testnet network</h1>)
   }
   else if (loadingState === 'Loaded') {
     return (

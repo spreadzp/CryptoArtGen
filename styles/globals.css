@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 .brand-color {
-  color: white;
+  color: #f0eeec;
 }
 
 pre, embed {
-  color: white;
+  color: #f0eeec;
 }
 
 .brand-bg {
-  background: #0f254d; 
+  background: #1f1f1f; 
  
 }
 
@@ -21,11 +21,11 @@ pre, embed {
 }
 
 .brand-btn {
-  background: #0f254d;
+  background: #1f1f1f;
 }
 
 .brand-logo {
-  background-image: url('./../public/brand.png');
+  background-image: url('./../public/brand.jpg');
   background-repeat: no-repeat;
   height: 100px;
   width: 130px;
@@ -57,8 +57,8 @@ div.settings label       { text-align:right; }
 /* div.settings label:after { content: ":"; }​ */
 
 .mint-btn {
-  background: white;
-  color: #0f254d;
+  background: #f0eeec;
+  color: #1f1f1f;
   font-family: inherit;
 }
 
@@ -68,8 +68,8 @@ div.settings label       { text-align:right; }
 }
 
 .board-btn {
-  background: white;
-  color: #0f254d;
+  background: #f0eeec;
+  color: #1f1f1f;
   font-family: inherit; 
 }
 

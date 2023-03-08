@@ -1,16 +1,15 @@
 import '../styles/globals.css'
 import Link from 'next/link'
-import { BuildingLibraryIcon, CubeTransparentIcon,  InboxStackIcon, WalletIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/solid'
-import { useMemo, useState } from 'react';
- 
+import { BuildingLibraryIcon, CubeTransparentIcon, InboxStackIcon, WalletIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/solid'
+import { useState } from 'react';
+
 import { AppProps } from 'next/app';
-import { env } from '../next.config'; 
 
 type MyAppProps = { Component: any, pageProps: any };
 
 function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: string }>) {
   const [activeMenuItem, setActiveMenuItem] = useState("")
- 
+
   return (
     <div className='brand-bg main-h'>
       <nav className="border-b p-6">
@@ -42,8 +41,6 @@ function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: string }>) 
       <div >
         <Component {...pageProps} />
       </div>
-
-
     </div>
   )
 }

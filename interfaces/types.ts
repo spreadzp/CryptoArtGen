@@ -46,7 +46,7 @@ export interface Web3InstanceProps {
     currentAddress: string,
     marketPlaceContract: any,
     encNftContract: any,
-    web3Instance: any
+    web3Utils: any
 }
 
 export interface NftInfo {

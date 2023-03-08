@@ -1,12 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react'
-import Web3 from 'web3'
-import Web3Modal from 'web3modal'
+import { useEffect, useState } from 'react' 
 import { useRouter } from 'next/router'
-import { create as ipfsHttpClient } from 'ipfs-http-client'
-import Marketplace from '../contracts/ethereum-contracts/Marketplace.json'
-import ENCNFT from '../contracts/ethereum-contracts/ENCNFT.json'
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { decryptByCJ, encryptByCJ, encryptData, getNewAccount } from '../utils/cypher'
 import { env } from './../next.config'
 import { getTemplateByTypeFile } from '../utils/common'
@@ -46,6 +42,7 @@ export default function CreateItem() {
   const [isProcessMint, setIsProcessMint] = useState(false)
   const [isPromptEncoded, setIsPromptEncoded] = useState(false)
   const [typeFile, setTypeFile] = useState('')
+  const [web3Utils, setWeb3Utils] = useState({} as any)
 
   useEffect(() => {
     generateKeys()
@@ -57,6 +54,7 @@ export default function CreateItem() {
         setAccount(inst.currentAddress)
         setMarketPlaceContract(inst.marketPlaceContract)
         setEncodedNftContract(inst.encNftContract)
+        setWeb3Utils(inst.web3Utils)
       }).catch((err: any) => {
         console.log('err', err)
       })
@@ -65,11 +63,7 @@ export default function CreateItem() {
   useEffect(() => {
     if (encryptedPrompt !== '' && newPrivateKey !== '') {
       const encryptPrivateKeyForNFTFile = async () => {
-        const web3Modal = new Web3Modal()
-        const provider = await web3Modal.connect()
-        const web3 = new Web3(provider)
-        const accounts = await web3.eth.getAccounts()
-        const encData = await encryptData(accounts[0], newPrivateKey)
+        const encData = await encryptData(account, newPrivateKey)
         if (encData !== '') {
           setEncPrKByOwnerAddress(encData)
         }
@@ -166,14 +160,14 @@ export default function CreateItem() {
 
   async function listNFTForSale() {
     try {
-      const web3Modal = new Web3Modal()
-      const provider = await web3Modal.connect()
-      const web3 = new Web3(provider)
+      // const web3Modal = new Web3Modal()
+      // const provider = await web3Modal.connect()
+      // const web3 = new Web3(provider)
       setIsUploadToIpfs(true)
       const url = await uploadToIPFS()
 
       setIsProcessMint(true)
-      const networkId = await web3.eth.net.getId()
+      // const networkId = await web3.eth.net.getId()
       // Mint the NFT
       // const encodedNftContractAddress = ENCNFT.networks[`${networkId}` as keyof typeof ENCNFT.networks].address
       // const encodedNftContract = new web3.eth.Contract(ENCNFT.abi as any, encodedNftContractAddress)
@@ -188,8 +182,8 @@ export default function CreateItem() {
         const tokenId = receipt.events.NFTMinted.returnValues[0];
         console.log("🚀 ~ file: create-and-list-nft.tsx ~ line 199 ~ encodedNftContract.methods.mint ~ tokenId", tokenId)
         if (tokenId) {
-console.log('encodedNftContract.address', encodedNftContract._address)
-          marketPlaceContract.methods.moveTokenForSell(tokenId, "Listing announce", Web3.utils.toWei(formInput.price, "ether"), encodedNftContract._address)//Web3.utils.toWei(formInput.price, "ether"))
+          console.log('encodedNftContract.address', encodedNftContract._address)
+          marketPlaceContract.methods.moveTokenForSell(tokenId, "Listing announce", web3Utils?.toWei(formInput.price, "ether"), encodedNftContract._address)//Web3.utils.toWei(formInput.price, "ether"))
             .send({ from: account, value: listingFee }).on('receipt', function (res: any) {
               console.log("🚀 ~ file: create-and-list-nft.tsx:194 ~ res:", res)
               console.log('listed')

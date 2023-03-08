@@ -2,9 +2,8 @@ import axios from 'axios';
 
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-
-import blenderPoster from './../public/brand.png';
+import { useEffect, useState } from 'react'; 
+ 
 
 type PosterImageProps = {
   imageUrl: string

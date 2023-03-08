@@ -1,20 +1,15 @@
 'use client';
 
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import Web3 from 'web3';
-import { ACTOR, ResponseLoadNfts, Web3InstanceProps, NFTProps } from "../interfaces/types"
-import { loadNFTs } from "../utils/nft-commands";
-import { getWeb3Instance } from "../utils/web3"
+import { useEffect, useState } from "react" 
+import { ACTOR, ResponseLoadNfts, NFTProps } from "../interfaces/types"
+import { loadNFTs } from "../utils/nft-commands"; 
 import Loader from "./loader"
 
 function Rates() {
     const router = useRouter()
     const headerNames = ['#', 'NFT ID', 'Show NFT', 'My current bet', 'Action']
-    const [marketPlaceContract, setMarketPlaceContract] = useState(null || {} as any)
-    const [encodedNftContract, setEncodedNftContract] = useState(null || {} as any)
-    const [isOwner, setIsOwner] = useState(false) 
-    const [soldNfts, setSoldNfts] = useState([] as SoldNft[])
+    const [marketPlaceContract, setMarketPlaceContract] = useState(null || {} as any) 
     const [ids, setIds] = useState([] as number[])
     const [isWithdraw, setIsWithdraw] = useState(false)
     const [nfts, setNfts] = useState([] as NFTProps[])
@@ -35,17 +30,10 @@ function Rates() {
           const notOwnedIds = notOwnedNft.map((item: NFTProps) => item?.tokenId)
           setIds(notOwnedIds)
           setAccount(resLoad.currentAddress)
-          setMarketPlaceContract(resLoad.marketPlaceContract)
-          setEncodedNftContract(resLoad.encNftContract)
+          setMarketPlaceContract(resLoad.marketPlaceContract) 
           setLoadingState('loaded')
         })()
-      }, [])
-
-      useEffect(() => {
-        
-        // getBuyersById
-      }, [ids, marketPlaceContract]);
-
+      }, []) 
  
     const makeAction = async (nft: NFTProps) => {
         try {
