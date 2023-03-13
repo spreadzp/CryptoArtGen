@@ -11,6 +11,7 @@ export async function getWeb3Instance(): Promise<Web3InstanceProps> {
         const provider = await web3Modal.connect()
         const web3 = new Web3(provider)
         const networkId = await web3.eth.net.getId()
+        console.log("🚀 ~ file: web3.ts:14 ~ getWeb3Instance ~ networkId:", networkId)
         const accounts = await web3.eth.getAccounts();
         const currentAddress = accounts[0]    
         // Get all listed NFTs

@@ -1,7 +1,7 @@
 # Prompt2Image NFTs
-To test it run in browser
+To test it run in the browser next url:
 ```
-crypto-art-gen-spread.vercel.app
+https://crypto-art-gen-spread.vercel.app
 ```
 
 ## To see how its work
